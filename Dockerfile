@@ -12,14 +12,17 @@ RUN set -e \
       && rm -rf /var/lib/apt/lists/*
 
 RUN set -e \
-      && /usr/bin/python3 /tmp/get-pip.py \
+      && python3 /tmp/get-pip.py \
       && pip install -U --no-cache-dir \
-        jupyter jupyter_contrib_nbextensions jupyterthemes
+        bash_kernel jupyter jupyter_contrib_nbextensions jupyterthemes
 
 ENV HOME /home/notebook
 
 RUN set -e \
       && mkdir ${HOME} \
+      && python3 -m bash_kernel.install \
+      && clir install --devt=github IRkernel/IRkernel \
+      && R -q -e 'IRkernel::installspec()' \
       && jupyter contrib nbextension install --system \
       && jt --theme oceans16 --toolbar --nbname --vimext \
       && find ${HOME} -exec chmod 777 {} \;
