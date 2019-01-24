@@ -7,7 +7,8 @@ RUN set -e \
       && apt-get -y dist-upgrade \
       && apt-get -y autoremove \
       && apt-get -y install --no-install-recommends --no-install-suggests \
-        python3-dev \
+        p7zip-full pbzip2 pigz python3-dev texlive-fonts-recommended \
+        texlive-generic-recommended texlive-xetex \
       && apt-get clean \
       && rm -rf /var/lib/apt/lists/*
 
@@ -24,7 +25,7 @@ RUN set -e \
       && clir install --devt=github IRkernel/IRkernel \
       && R -q -e 'IRkernel::installspec()' \
       && jupyter contrib nbextension install --system \
-      && jt --theme oceans16 --toolbar --nbname --vimext \
+      && jt --theme oceans16 -f ubuntu --toolbar --nbname --vimext \
       && find ${HOME} -exec chmod 777 {} \;
 
 EXPOSE 8888
