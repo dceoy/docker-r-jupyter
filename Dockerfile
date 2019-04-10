@@ -7,13 +7,13 @@ RUN set -e \
       && apt-get -y dist-upgrade \
       && apt-get -y autoremove \
       && apt-get -y install --no-install-recommends --no-install-suggests \
-        p7zip-full pbzip2 pigz python3-dev texlive-fonts-recommended \
+        p7zip-full pbzip2 pigz python3.7-dev texlive-fonts-recommended \
         texlive-generic-recommended texlive-xetex \
       && apt-get clean \
       && rm -rf /var/lib/apt/lists/*
 
 RUN set -e \
-      && python3 /tmp/get-pip.py \
+      && python3.7 /tmp/get-pip.py \
       && pip install -U --no-cache-dir \
         bash_kernel jupyter jupyter_contrib_nbextensions jupyterthemes
 
@@ -21,7 +21,7 @@ ENV HOME /home/notebook
 
 RUN set -e \
       && mkdir ${HOME} \
-      && python3 -m bash_kernel.install \
+      && python3.7 -m bash_kernel.install \
       && clir install --devt=github IRkernel/IRkernel \
       && R -q -e 'IRkernel::installspec()' \
       && jupyter contrib nbextension install --system \
