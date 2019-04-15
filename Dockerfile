@@ -5,10 +5,10 @@ ADD https://bootstrap.pypa.io/get-pip.py /tmp/get-pip.py
 RUN set -e \
       && apt-get -y update \
       && apt-get -y dist-upgrade \
-      && apt-get -y autoremove \
       && apt-get -y install --no-install-recommends --no-install-suggests \
-        p7zip-full pbzip2 pigz python3.7-dev texlive-fonts-recommended \
-        texlive-generic-recommended texlive-xetex \
+        librsvg2-bin lmodern p7zip-full pbzip2 pigz python3.7-dev \
+        texlive-fonts-recommended texlive-generic-recommended texlive-xetex \
+      && apt-get -y autoremove \
       && apt-get clean \
       && rm -rf /var/lib/apt/lists/*
 
