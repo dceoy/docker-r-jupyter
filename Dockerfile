@@ -20,6 +20,9 @@ RUN set -e \
 ENV HOME /home/notebook
 
 RUN set -e \
+      && clir update
+
+RUN set -e \
       && mkdir ${HOME} \
       && python3.7 -m bash_kernel.install \
       && clir install --devt=github IRkernel/IRkernel \
