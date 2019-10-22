@@ -1,26 +1,49 @@
-FROM dceoy/r-tidyverse:latest
+FROM ubuntu:latest
+
+ENV DEBIAN_FRONTEND noninteractive
+
+COPY --from=dceoy/r-tidyverse:latest /usr/local /usr/local
 
 ADD https://bootstrap.pypa.io/get-pip.py /tmp/get-pip.py
 
 RUN set -e \
+      && ln -sf /bin/bash /bin/sh
+
+RUN set -e \
+      && apt-get -y update \
+      && apt-get -y install --no-install-recommends --no-install-suggests \
+        apt-transport-https apt-utils ca-certificates gnupg \
+      && echo "deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/" \
+        > /etc/apt/sources.list.d/r.list \
+      && apt-key adv --keyserver keyserver.ubuntu.com \
+        --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9 \
       && apt-get -y update \
       && apt-get -y dist-upgrade \
       && apt-get -y install --no-install-recommends --no-install-suggests \
-        librsvg2-bin lmodern p7zip-full pbzip2 pigz python3.7-dev \
-        texlive-fonts-recommended texlive-generic-recommended texlive-xetex \
+        curl g++ gcc gfortran git make libblas-dev libcurl4-gnutls-dev \
+        liblapack-dev libmariadb-client-lgpl-dev libpq-dev librsvg2-bin \
+        libsqlite3-dev libssh2-1-dev libssl-dev libxml2-dev lmodern locales \
+        p7zip-full pandoc pbzip2 pigz python3.7-dev texlive-fonts-recommended \
+        texlive-generic-recommended texlive-xetex r-base \
       && apt-get -y autoremove \
       && apt-get clean \
       && rm -rf /var/lib/apt/lists/*
+
+RUN set -e \
+      && locale-gen en_US.UTF-8 \
+      && update-locale
 
 RUN set -e \
       && python3.7 /tmp/get-pip.py \
       && pip install -U --no-cache-dir \
         bash_kernel jupyter jupyter_contrib_nbextensions jupyterthemes
 
-ENV HOME /home/notebook
-
 RUN set -e \
-      && clir update
+      && clir update \
+      && clir install --devt=cran dbplyr doParallel foreach ggpubr rmarkdown tidyverse \
+      && clir validate dbplyr doParallel foreach ggpubr rmarkdown tidyverse
+
+ENV HOME /home/notebook
 
 RUN set -e \
       && mkdir ${HOME} \
