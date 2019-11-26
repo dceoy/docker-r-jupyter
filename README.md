@@ -26,3 +26,13 @@ Run a server with docker-compose
 ```sh
 $ docker-compose -f /path/to/docker-jupyter/docker-compose.yml up
 ```
+
+Dependency
+----------
+
+The image uses the following tool:
+
+- clir
+  - R package manager for command line interface
+  - [GitHub - dceoy/clir](https://github.com/dceoy/clir)
+  - [DockerHub - dceoy/clir](https://hub.docker.com/r/dceoy/clir)
