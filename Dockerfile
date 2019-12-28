@@ -20,11 +20,12 @@ RUN set -e \
       && apt-get -y update \
       && apt-get -y dist-upgrade \
       && apt-get -y install --no-install-recommends --no-install-suggests \
-        curl g++ gcc gfortran git make libblas-dev libcurl4-gnutls-dev \
+        curl file g++ gcc gfortran git make libblas-dev libcurl4-gnutls-dev \
         libgit2-dev liblapack-dev libmariadb-client-lgpl-dev libpq-dev \
-        libsqlite3-dev libssh2-1-dev libssl-dev libxml2-dev lmodern locales \
-        p7zip-full pandoc pbzip2 pigz python3.7-dev texlive-fonts-recommended \
-        texlive-generic-recommended texlive-xetex r-base \
+        libsqlite3-dev libssh2-1-dev libssl-dev libunwind-dev libxml2-dev \
+        lmodern locales p7zip-full pandoc pbzip2 pigz python3.8-dev \
+        texlive-fonts-recommended texlive-generic-recommended texlive-xetex \
+        r-base \
       && apt-get -y autoremove \
       && apt-get clean \
       && rm -rf /var/lib/apt/lists/*
@@ -34,7 +35,7 @@ RUN set -e \
       && update-locale
 
 RUN set -e \
-      && python3.7 /tmp/get-pip.py \
+      && python3.8 /tmp/get-pip.py \
       && pip install -U --no-cache-dir \
         bash_kernel jupyter jupyter_contrib_nbextensions jupyterthemes
 
@@ -47,7 +48,7 @@ ENV HOME /home/notebook
 
 RUN set -e \
       && mkdir ${HOME} \
-      && python3.7 -m bash_kernel.install \
+      && python3.8 -m bash_kernel.install \
       && clir install --devt=github IRkernel/IRkernel \
       && R -q -e 'IRkernel::installspec()' \
       && jupyter contrib nbextension install --system \
