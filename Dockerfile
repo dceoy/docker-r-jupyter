@@ -21,9 +21,9 @@ RUN set -e \
       && apt-get -y dist-upgrade \
       && apt-get -y install --no-install-recommends --no-install-suggests \
         curl g++ gcc gfortran git make libblas-dev libcurl4-gnutls-dev \
-        liblapack-dev libmariadb-client-lgpl-dev libpq-dev libsqlite3-dev \
-        libssh2-1-dev libssl-dev libxml2-dev lmodern locales p7zip-full \
-        pandoc pbzip2 pigz python3.7-dev texlive-fonts-recommended \
+        libgit2-dev liblapack-dev libmariadb-client-lgpl-dev libpq-dev \
+        libsqlite3-dev libssh2-1-dev libssl-dev libxml2-dev lmodern locales \
+        p7zip-full pandoc pbzip2 pigz python3.7-dev texlive-fonts-recommended \
         texlive-generic-recommended texlive-xetex r-base \
       && apt-get -y autoremove \
       && apt-get clean \
