@@ -35,7 +35,9 @@ RUN set -e \
       && update-locale
 
 RUN set -e \
-      && python3.8 /tmp/get-pip.py \
+      && ln -sf /usr/bin/python3.8 /usr/bin/python \
+      && ln -sf /usr/bin/python3.8 /usr/bin/python3 \
+      && /usr/bin/python /tmp/get-pip.py \
       && pip install -U --no-cache-dir \
         bash_kernel jupyter jupyter_contrib_nbextensions jupyterthemes
 
@@ -48,7 +50,7 @@ ENV HOME /home/notebook
 
 RUN set -e \
       && mkdir ${HOME} \
-      && python3.8 -m bash_kernel.install \
+      && /usr/bin/python -m bash_kernel.install \
       && clir install --devt=github IRkernel/IRkernel \
       && R -q -e 'IRkernel::installspec()' \
       && jupyter contrib nbextension install --system \
