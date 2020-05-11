@@ -7,7 +7,7 @@ COPY --from=dceoy/r-tidyverse:latest /usr/local /usr/local
 ADD https://bootstrap.pypa.io/get-pip.py /tmp/get-pip.py
 
 RUN set -e \
-      && ln -sf /bin/bash /bin/sh \
+      && ln -sf bash /bin/sh \
       && ln -s python3 /usr/bin/python
 
 RUN set -e \
