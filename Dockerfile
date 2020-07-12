@@ -1,32 +1,19 @@
-FROM ubuntu:latest
-
-ENV DEBIAN_FRONTEND noninteractive
-
-COPY --from=dceoy/r-tidyverse:latest /usr/local /usr/local
+FROM dceoy/r-tidyverse:latest
 
 ADD https://bootstrap.pypa.io/get-pip.py /tmp/get-pip.py
 
 RUN set -e \
-      && ln -sf bash /bin/sh \
       && ln -s python3 /usr/bin/python
 
 RUN set -e \
       && apt-get -y update \
       && apt-get -y dist-upgrade \
       && apt-get -y install --no-install-recommends --no-install-suggests \
-        apt-transport-https apt-utils ca-certificates curl file g++ gcc \
-        gfortran git make libblas-dev libcurl4-gnutls-dev libgit2-dev \
-        liblapack-dev libmariadb-dev libpq-dev libsqlite3-dev libssh-dev \
-        libssl-dev libunwind-dev libxml2-dev lmodern locales p7zip-full \
-        pandoc pbzip2 pigz python3-dev texlive-fonts-recommended \
-        texlive-plain-generic texlive-xetex r-base \
+        file libunwind-dev lmodern p7zip-full pbzip2 pigz python3-dev \
+        texlive-fonts-recommended texlive-plain-generic texlive-xetex \
       && apt-get -y autoremove \
       && apt-get clean \
       && rm -rf /var/lib/apt/lists/*
-
-RUN set -e \
-      && locale-gen en_US.UTF-8 \
-      && update-locale
 
 RUN set -e \
       && /usr/bin/python3 /tmp/get-pip.py \
@@ -44,7 +31,7 @@ RUN set -e \
       && mkdir ${HOME} \
       && /usr/bin/python3 -m bash_kernel.install \
       && clir install --devt=github IRkernel/IRkernel \
-      && R -q -e 'IRkernel::installspec()' \
+      && R -q -e 'IRkernel::installspec();' \
       && jupyter contrib nbextension install --system \
       && jt --theme oceans16 -f ubuntu --toolbar --nbname --vimext \
       && find ${HOME} -exec chmod 777 {} \;
