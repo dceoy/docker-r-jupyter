@@ -18,7 +18,7 @@ RUN set -e \
 RUN set -e \
       && /usr/bin/python3 /tmp/get-pip.py \
       && pip install -U --no-cache-dir \
-        bash_kernel jupyter jupyter_contrib_nbextensions jupyterthemes
+        bash_kernel jupyterlab jupyter_contrib_nbextensions jupyterthemes
 
 RUN set -e \
       && clir update \
@@ -39,4 +39,4 @@ RUN set -e \
 EXPOSE 8888
 
 ENTRYPOINT ["jupyter"]
-CMD ["notebook", "--port=8888", "--ip=0.0.0.0", "--allow-root", "--no-browser"]
+CMD ["lab", "--port=8888", "--ip=0.0.0.0", "--allow-root", "--no-browser"]

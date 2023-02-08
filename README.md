@@ -1,7 +1,7 @@
 docker-r-jupyter
 ================
 
-Dockerfile for R with Jupyter Notebook
+Dockerfile for R with JupyterLab
 
 [![CI to Docker Hub](https://github.com/dceoy/docker-r-jupyter/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/dceoy/docker-r-jupyter/actions/workflows/docker-publish.yml)
 

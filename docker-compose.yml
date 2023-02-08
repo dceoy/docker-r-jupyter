@@ -18,7 +18,7 @@ services:
     entrypoint:
       - jupyter
     command:
-      - notebook
+      - lab
       - --port=8888
       - --ip=0.0.0.0
       - --notebook-dir=/nb
